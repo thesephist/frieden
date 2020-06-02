@@ -171,6 +171,7 @@ class App extends Component {
 
     init() {
         this._firstScrolled = false;
+        this.isFetching = false;
         this.lastFetchedDay = 0;
         this.lastFetchedDaysPerScreen = 0;
 
@@ -223,10 +224,14 @@ class App extends Component {
             return
         }
 
+        this.isFetching = true;
         this.lastFetchedDay = this.day;
         this.lastFetchedDaysPerScreen = this.daysPerScreen;
 
+        this.render();
         this.slots = await getBusySlots(this.day, this.daysPerScreen);
+
+        this.isFetching = false;
         this.render();
 
         //> Scroll to 8AM after first fetch
@@ -260,7 +265,7 @@ class App extends Component {
         return jdom`<div class="app">
             <header>
                 <h1>
-                    <div>When is Linus free?</div>
+                    <div>${this.isFetching ? 'loading calendar...' : 'When is Linus free?'}</div>
                     <button class="setDateButton block">pick date</button>
                 </h1>
                 <nav>
