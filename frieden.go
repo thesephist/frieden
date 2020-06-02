@@ -53,8 +53,6 @@ func mustConfigure() {
 		log.Fatalf("Could not read config from file!\n\tError: %s", err.Error())
 	}
 	err = json.Unmarshal(configString, &config)
-
-	fmt.Println(config)
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +94,6 @@ func getData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonStr, err := json.Marshal(&outgoingParams)
-	fmt.Println(string(jsonStr))
 	proxyReq, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("https://www.googleapis.com/calendar/v3/freeBusy?alt=json&key=%s", config.ApiKey),
