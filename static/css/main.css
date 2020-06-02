@@ -211,6 +211,47 @@ nav button {
     border-radius: 4px;
     border: 2px solid var(--block-text-color);
 }
+
+.datePickerWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .35);
+    z-index: 10;
+}
+
+.datePicker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.datePicker .title {
+    margin: 10px 6px;
+}
+
+.selectWrapper {
+    padding: 0;
+    width: 200px;
+}
+
+.selectWrapper select {
+    font-weight: bold;
+    padding: 6px 8px;
+    width: 100%;
+    font-size: 1em;
+}
+
+.setDateButton {
+    margin-left: auto;
+}
  
 @media only screen and (max-width: 1008px) {
     #root {

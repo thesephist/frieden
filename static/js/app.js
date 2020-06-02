@@ -10,6 +10,28 @@ const TZOFFSET = new Date().getTimezoneOffset() * MINUTE;
 const HOUR_HEIGHT = 50; // px
 const timeToPx = t => t / HOUR * HOUR_HEIGHT;
 
+const _currentYear = new Date().getFullYear();
+const YEARS = [
+    _currentYear - 1,
+    _currentYear,
+    _currentYear + 1,
+];
+
+const MONTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+
 const DAYS_OF_WEEK = [
     'Sun',
     'Mon',
@@ -167,6 +189,94 @@ function Day(t, slots, daysPerScreen) {
     </div>`;
 }
 
+class DatePicker extends Component {
+
+    init(setDate) {
+        this._invalid = false;
+
+        const d = new Date(ut());
+        this.year = d.getFullYear();
+        this.month = d.getMonth();
+        this.date = d.getDate();
+
+        this.handleYear = this.handleInput.bind(this, 'year');
+        this.handleMonth = this.handleInput.bind(this, 'month');
+        this.handleDate = this.handleInput.bind(this, 'date');
+
+        this.setDate = () => {
+            const d = new Date(dfloor(ut()));
+            d.setFullYear(this.year);
+            d.setMonth(this.month);
+            d.setDate(this.date);
+            setDate(+d);
+        };
+    }
+
+    handleInput(label, evt) {
+        const prev = this[label];
+        this[label] = +evt.target.value;
+
+        //> Test if the new date is valid
+        const d = new Date(dfloor(ut()));
+        d.setFullYear(this.year);
+        d.setMonth(this.month);
+        d.setDate(this.date);
+
+        const t = +d;
+        this._invalid = isNaN(t);
+
+        this.render();
+    }
+
+    assignDate(t) {
+        const d = new Date(t);
+        this.year = d.getFullYear();
+        this.month = d.getMonth();
+        this.date = d.getDate();
+        this.render();
+    }
+
+    compose() {
+        return jdom`<div class="datePickerWrapper">
+            <div class="datePicker fixed block">
+                <p class="title">Pick a date...</p>
+
+                <div class="selectWrapper fixed block">
+                    <select id="dp-year" name="year" oninput="${this.handleYear}"
+                        value="${this.year}">
+                        ${YEARS.map(year => jdom`<option value="${year}">${year}</option>`)}
+                    </select>
+                </div>
+
+                <div class="selectWrapper fixed block">
+                    <select id="dp-month" name="month" oninput="${this.handleMonth}"
+                        value="${this.month}">
+                        ${MONTHS.map((name, i) => jdom`<option value=${i}>${name}</option>`)}
+                    </select>
+                </div>
+
+                <div class="selectWrapper fixed block">
+                    <select id="dp-date" name="date" oninput="${this.handleDate}"
+                        value="${this.date}">
+                        ${Array.from(new Array(31), (_, i) => i + 1).map(d => {
+                            return jdom`<option value=${d}>${d}</option>`;
+                        })}
+                    </select>
+                </div>
+
+                ${this._invalid ? (
+                    jdom`<p class="warning">* Invalid date</p>`
+                ) : (
+                    jdom`<button class="setDateButton accent block" onclick="${this.setDate}">
+                        Choose
+                    </button>`
+                )}
+            </div>
+        </div>`;
+    }
+
+}
+
 class App extends Component {
 
     init() {
@@ -174,6 +284,14 @@ class App extends Component {
         this.isFetching = false;
         this.lastFetchedDay = 0;
         this.lastFetchedDaysPerScreen = 0;
+
+        this._dp = false;
+        this.datePicker = new DatePicker(d => {
+            this.day = dfloor(d);
+            this._dp = false;
+            this.render();
+            this.fetch();
+        });
 
         this.day = dfloor(ut());
         this.daysPerScreen = 3;
@@ -253,6 +371,8 @@ class App extends Component {
 
     adjustToday() {
         this.day = dfloor(ut());
+        this.render();
+
         this.fetch();
     }
 
@@ -266,7 +386,11 @@ class App extends Component {
             <header>
                 <h1>
                     <div>${this.isFetching ? 'loading calendar...' : 'When is Linus free?'}</div>
-                    <button class="setDateButton block">pick date</button>
+                    <button class="setDateButton block" onclick="${() => {
+                        this._dp = true;
+                        this.datePicker.assignDate(this.day);
+                        this.render();
+                    }}">pick date</button>
                 </h1>
                 <nav>
                     <button class="block leftWeekButton"
@@ -286,6 +410,7 @@ class App extends Component {
                     ${days}
                 </div>
             </div>
+            ${this._dp ? this.datePicker.node : null}
         </div>`;
     }
 }
