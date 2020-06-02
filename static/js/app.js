@@ -162,7 +162,7 @@ function Hour(hour) {
 function Day(t, slots, daysPerScreen) {
     const isToday = t === dfloor(ut());
     const nowBar = jdom`<div class="now"
-        style="top:${timeToPx((ut() - TZOFFSET) % DAY + HOUR_HEIGHT)}px">
+        style="top:${timeToPx((ut() - TZOFFSET) % DAY) + HOUR_HEIGHT}px">
         now
     </div>`;
 
@@ -267,7 +267,8 @@ class DatePicker extends Component {
                 ${this._invalid ? (
                     jdom`<p class="warning">* Invalid date</p>`
                 ) : (
-                    jdom`<button class="setDateButton accent block" onclick="${this.setDate}">
+                    jdom`<button class="setDateButton accent block" onclick="${this.setDate}"
+                        title="Select this date">
                         Choose
                     </button>`
                 )}
@@ -385,29 +386,29 @@ class App extends Component {
         return jdom`<div class="app">
             <header>
                 <h1>
-                    <div>${this.isFetching ? 'loading calendar...' : jdom`<span>
+                    <div>${this.isFetching ? jdom`<span class="main">loading calendar...</span>`: jdom`<span>
                         <span class="main">When is Linus free?</span>
                         <span class="sub">(I'm busy in <span class="red">red</span> boxes)</span>
                     </span>`}</div>
                     <div class="buttonGroup">
-                        <a class="block" href="https://thesephist.com/posts/frieden/">?</a>
+                        <a class="block" href="https://thesephist.com/posts/frieden/" title="Help">?</a>
                         <button class="openDatePickerButton block" onclick="${() => {
                             this._dp = true;
                             this.datePicker.assignDate(this.day);
                             this.render();
-                        }}">pick date</button>
+                        }}" title="Pick a date">pick date</button>
                     </div>
                 </h1>
                 <nav>
-                    <button class="block leftWeekButton"
+                    <button class="block leftWeekButton" title="Go back a week"
                         onclick="${this.handleLeftWeek}">${'<<'} w</button>
-                    <button class="block leftDayButton"
+                    <button class="block leftDayButton" title="Go back a day"
                         onclick="${this.handleLeftDay}">${'<'} d</button>
-                    <button class="accent block todayButton"
+                    <button class="accent block todayButton" title="Go to today"
                         onclick="${this.handleToday}">today</button>
-                    <button class="block rightDayButton"
+                    <button class="block rightDayButton" title="Go forward a day"
                         onclick="${this.handleRightDay}">d ${'>'}</button>
-                    <button class="block rightWeekButton"
+                    <button class="block rightWeekButton" title="Go forward a week"
                         onclick="${this.handleRightWeek}">w ${'>>'}</button>
                 </nav>
             </header>
