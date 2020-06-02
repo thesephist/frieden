@@ -27,6 +27,16 @@ header {
     overflow: hidden;
 }
 
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+}
+
 header, h1, nav, .days {
     width: 100%;
 }
@@ -44,9 +54,20 @@ h1 {
     justify-content: space-between;
 }
 
-h1 div {
+h1 .main {
     font-size: 1.2em;
     text-decoration: underline;
+    margin-right: 6px;
+}
+
+h1 .sub {
+    color: #999;
+    font-size: 1em;
+    white-space: nowrap;
+}
+
+h1 .red {
+    color: var(--block-accent-color);
 }
 
 nav {
@@ -247,6 +268,10 @@ nav button {
     padding: 6px 8px;
     width: 100%;
     font-size: 1em;
+}
+
+.openDatePickerButton {
+    white-space: nowrap;
 }
 
 .setDateButton {

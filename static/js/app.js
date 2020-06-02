@@ -385,12 +385,18 @@ class App extends Component {
         return jdom`<div class="app">
             <header>
                 <h1>
-                    <div>${this.isFetching ? 'loading calendar...' : 'When is Linus free?'}</div>
-                    <button class="setDateButton block" onclick="${() => {
-                        this._dp = true;
-                        this.datePicker.assignDate(this.day);
-                        this.render();
-                    }}">pick date</button>
+                    <div>${this.isFetching ? 'loading calendar...' : jdom`<span>
+                        <span class="main">When is Linus free?</span>
+                        <span class="sub">(I'm busy in <span class="red">red</span> boxes)</span>
+                    </span>`}</div>
+                    <div class="buttonGroup">
+                        <a class="block" href="https://thesephist.com/posts/frieden/">?</a>
+                        <button class="openDatePickerButton block" onclick="${() => {
+                            this._dp = true;
+                            this.datePicker.assignDate(this.day);
+                            this.render();
+                        }}">pick date</button>
+                    </div>
                 </h1>
                 <nav>
                     <button class="block leftWeekButton"
