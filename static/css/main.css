@@ -1,0 +1,219 @@
+html,
+body {
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    --block-accent-color: #b9350e;
+}
+
+#root {
+    height: 100vh;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.app {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    overflow: hidden;
+}
+
+header, h1, nav, .days {
+    width: 100%;
+}
+
+button {
+    font-size: 1rem;
+}
+
+h1 {
+    font-size: 1rem;
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 div {
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav button {
+    white-space: nowrap;
+}
+
+.daysBox {
+    width: calc(100% - 8px);
+    flex-shrink: 1;
+    flex-grow: 1;
+    height: 0;
+    padding: 0;
+}
+
+.days {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-size: 14px;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+}
+
+.days .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.day {
+    overflow: hidden;
+}
+
+.dateBox {
+    width: 100%;
+    padding: 0;
+    padding-top: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dateLabel {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 50px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    border-bottom: 2px solid var(--block-text-color);
+    width: 100%;
+    background-color: var(--block-background-color);
+}
+
+.dateLabel.accent {
+    background: #f4e1dc;
+}
+
+.dateLabel.accent h2, .dateLabel.accent p {
+    color: var(--block-accent-color);
+}
+
+.dateLabel h2, .dateLabel p {
+    margin: 0;
+}
+
+.dateLabel h2 {
+    font-size: 1em;
+    margin-bottom: 2px;
+}
+
+.dateLabel p {
+    font-size: 12px;
+    color: #777;
+}
+
+.hour {
+    height: 50px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.hourAnnotation {
+    font-size: 12px;
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+}
+
+.now {
+    font-size: 1em;
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--block-accent-color);
+    background-color: rgba(255, 255, 255, .7);
+}
+
+.now::before, .now::after,
+.hourAnnotation::before, .hourAnnotation::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 500px;
+    border-top: 1px solid #999;
+}
+
+.now::before,
+.hourAnnotation::before {
+    left: calc(100% + 4px);
+}
+
+.now::after,
+.hourAnnotation::after {
+    right: calc(100% + 4px);
+}
+
+.now::before, .now::after {
+    border-color: var(--block-accent-color);
+    border-width: 3px;
+}
+
+.hour:nth-of-type(odd) {
+    background: #eee;
+}
+
+.day .slot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: var(--block-accent-color);
+    color: var(--block-background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 2px solid var(--block-text-color);
+}
+ 
+@media only screen and (max-width: 1008px) {
+    #root {
+        width: calc(100% - 8px);
+    }
+}
