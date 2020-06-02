@@ -6,7 +6,7 @@ Frieden is built with my usual arsenal of homebrew tools:
 
 - A simple Go backend, proxying Google Calendar's API
 - [Torus](https://github.com/thesephist/torus) driving the web UI
-- [blocks.css](https://github.com/thesephist/blocks) for some visual flair
+- [blocks.css](https://github.com/thesephist/blocks.css) for some visual flair
 
 ![Screenshot](screenshot.png)
 
