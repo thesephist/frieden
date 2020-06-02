@@ -1,2 +1,3 @@
-# frieden
+# Frieden
+
 Personal availability calendar
