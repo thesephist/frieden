@@ -387,7 +387,7 @@ class App extends Component {
             <header>
                 <h1>
                     <div>${this.isFetching ? jdom`<span class="main">loading calendar...</span>`: jdom`<span>
-                        <span class="main">When is Linus free?</span>
+                        <span class="main">When is Linus busy?</span>
                         <span class="sub">(I'm busy in <span class="red">red</span> boxes)</span>
                     </span>`}</div>
                     <div class="buttonGroup">
